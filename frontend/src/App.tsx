@@ -168,7 +168,7 @@ export default function App() {
             fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase",
             color: "#666", marginBottom: 24, fontWeight: 600,
           }}>
-            Materials · Innovation
+            Health · Vitamins · Innovation
           </p>
           <h1 style={{
             fontSize: "clamp(56px, 9vw, 90px)", fontWeight: 800,

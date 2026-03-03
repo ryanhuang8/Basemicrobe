@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "./CartContext";
+import psylliumImg from "./assets/psyllium_colon_cleanse.png";
+import fizzC from "./assets/fruit_fizz_c.png";
+import veganLeather from "./assets/leather.png";
 
 const PRODUCTS = [
   {
@@ -9,6 +12,7 @@ const PRODUCTS = [
     price: "$22.50",
     tag: "Health",
     bg: "#e8e4de",
+    image: psylliumImg,
   },
   {
     name: "Fruit Fizz-C",
@@ -16,6 +20,7 @@ const PRODUCTS = [
     price: "$13 / pack",
     tag: "Wellness",
     bg: "#dde8d8",
+    image: fizzC,
   },
   {
     name: "Vegan Leather",
@@ -23,6 +28,7 @@ const PRODUCTS = [
     price: "Ask for price",
     tag: "Materials",
     bg: "#e4ddd6",
+    image: veganLeather,
   },
 ];
 
@@ -120,15 +126,17 @@ export default function Products() {
               onMouseEnter={e => (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(0,0,0,0.08)"}
               onMouseLeave={e => (e.currentTarget as HTMLElement).style.boxShadow = "none"}
             >
-              {/* Image placeholder */}
+              {/* Image */}
               <div style={{
                 background: product.bg,
                 aspectRatio: "4 / 3",
                 display: "flex", alignItems: "center", justifyContent: "center",
+                overflow: "hidden",
               }}>
-                <p style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#999", fontWeight: 600 }}>
-                  Image
-                </p>
+                {product.image
+                  ? <img src={product.image} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  : <p style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#999", fontWeight: 600 }}>Image</p>
+                }
               </div>
 
               {/* Card body */}
@@ -150,7 +158,7 @@ export default function Products() {
                     {product.price}
                   </span>
                   <button
-                    onClick={() => addToCart({ name: product.name, price: product.price, bg: product.bg })}
+                    onClick={() => addToCart({ name: product.name, price: product.price, bg: product.bg, image: product.image })}
                     style={{
                       fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase",
                       fontWeight: 700, background: "#111", color: "#fff",

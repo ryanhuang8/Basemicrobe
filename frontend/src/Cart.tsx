@@ -108,13 +108,15 @@ export default function Cart() {
                   display: "flex", alignItems: "center", gap: 24,
                   padding: "24px 0", borderBottom: "1px solid #e5e5e5",
                 }}>
-                  {/* Image placeholder */}
+                  {/* Image */}
                   <div style={{
                     width: 80, height: 80, flexShrink: 0,
-                    background: item.bg, display: "flex",
-                    alignItems: "center", justifyContent: "center",
+                    background: item.bg, overflow: "hidden",
                   }}>
-                    <span style={{ fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: "#999" }}>IMG</span>
+                    {item.image
+                      ? <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      : null
+                    }
                   </div>
 
                   {/* Details */}
