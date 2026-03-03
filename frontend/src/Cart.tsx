@@ -1,9 +1,35 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "./CartContext";
 
 export default function Cart() {
   const { items, removeFromCart, updateQuantity, totalItems } = useCart();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("http://localhost:8000/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map(i => ({ name: i.name, price: i.price, quantity: i.quantity })),
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.detail || "Checkout failed");
+      }
+      const { url } = await res.json();
+      window.location.href = url;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      setLoading(false);
+    }
+  };
 
   const numericTotal = items.reduce((sum, item) => {
     const match = item.price.match(/[\d.]+/);
@@ -171,16 +197,22 @@ export default function Cart() {
                     {items.some(i => i.price === "Ask for price") && "+"}
                   </span>
                 </div>
-                <button style={{
-                  width: "100%", fontSize: 12, letterSpacing: "0.12em",
-                  textTransform: "uppercase", fontWeight: 700,
-                  background: "#111", color: "#fff", border: "none",
-                  padding: "16px", cursor: "pointer", transition: "background 0.2s",
-                }}
-                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#333"}
-                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#111"}
+                {error && (
+                  <p style={{ fontSize: 13, color: "#c0392b", marginBottom: 12, textAlign: "center" }}>{error}</p>
+                )}
+                <button
+                  onClick={handleCheckout}
+                  disabled={loading}
+                  style={{
+                    width: "100%", fontSize: 12, letterSpacing: "0.12em",
+                    textTransform: "uppercase", fontWeight: 700,
+                    background: loading ? "#555" : "#111", color: "#fff", border: "none",
+                    padding: "16px", cursor: loading ? "not-allowed" : "pointer", transition: "background 0.2s",
+                  }}
+                  onMouseEnter={e => { if (!loading) (e.currentTarget as HTMLElement).style.background = "#333"; }}
+                  onMouseLeave={e => { if (!loading) (e.currentTarget as HTMLElement).style.background = "#111"; }}
                 >
-                  Checkout
+                  {loading ? "Redirecting..." : "Checkout"}
                 </button>
               </div>
             </div>
