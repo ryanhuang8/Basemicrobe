@@ -54,9 +54,7 @@ export default function Cart() {
           </Link>
           {[
             { label: "About", href: "/#about" },
-            { label: "Science", href: "/#science" },
-            { label: "Performance", href: "/#performance" },
-            { label: "Applications", href: "/#applications" },
+            { label: "Contact", href: "/#contact" },
           ].map(l => (
             <a key={l.label} href={l.href} style={{
               fontSize: 13, letterSpacing: "0.06em", textDecoration: "none",
