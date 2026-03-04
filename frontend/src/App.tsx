@@ -181,7 +181,7 @@ export default function App() {
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#111"; (e.currentTarget as HTMLElement).style.color = "#fff"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = "transparent"; (e.currentTarget as HTMLElement).style.color = "#111"; }}
             >
-              Join Waitlist
+              Contact Us
             </a>
           </div>
         </div>
@@ -270,7 +270,7 @@ export default function App() {
         <p style={{ fontSize: isMobile ? 16 : 18, color: "#666", maxWidth: 480, margin: "0 auto 48px", lineHeight: 1.65 }}>
           Contact our team to explore partnership opportunities, request samples, or ask any questions about our products and science. We'd love to hear from you!
         </p>
-        <a href="mailto:hello@yourbrand.com" style={{
+        <a href="mailto:basemicrobe@gmail.com" style={{
           fontSize: 13, letterSpacing: "0.12em", textDecoration: "none",
           color: "#fff", background: "#111", padding: "16px 40px",
           textTransform: "uppercase", fontWeight: 700, display: "inline-block",
