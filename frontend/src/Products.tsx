@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "./CartContext";
+import logoImg from "./assets/basemicrobe-logo.png";
 import psylliumImg from "./assets/psyllium_colon_cleanse.png";
 import fizzC from "./assets/fruit_fizz_c.png";
 import veganLeather from "./assets/leather.png";
@@ -48,8 +49,9 @@ export default function Products() {
         borderBottom: "1px solid rgba(0,0,0,0.08)",
       }}>
         <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
-          <Link to="/" style={{ fontWeight: 700, fontSize: 18, letterSpacing: "0.08em", textDecoration: "none", color: "#111" }}>
-            BASEMICROBE
+          <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#111" }}>
+            <img src={logoImg} alt="Basemicrobe" style={{ height: 20 }} />
+            <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: "0.08em" }}>BASEMICROBE</span>
           </Link>
           {[
             { label: "About", href: "/#about" },
@@ -70,12 +72,12 @@ export default function Products() {
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <Link to="/products" style={{
             fontSize: 12, letterSpacing: "0.1em", textDecoration: "none",
-            color: "#fff", background: "#7aab6e", padding: "9px 20px",
+            color: "#fff", background: "#009f6c", padding: "9px 20px",
             textTransform: "uppercase", fontWeight: 600,
             transition: "background 0.2s",
           }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#8fbc84"}
-            onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#7aab6e"}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#00b87d"}
+            onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#009f6c"}
           >
             Shop Now
           </Link>
@@ -91,7 +93,7 @@ export default function Products() {
             {totalItems > 0 && (
               <span style={{
                 position: "absolute", top: 0, right: 0,
-                background: "#7aab6e", color: "#fff",
+                background: "#009f6c", color: "#fff",
                 fontSize: 9, fontWeight: 700, borderRadius: "50%",
                 width: 14, height: 14, display: "flex", alignItems: "center", justifyContent: "center",
               }}>
@@ -141,7 +143,7 @@ export default function Products() {
               <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: 8, flex: 1 }}>
                 <span style={{
                   fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase",
-                  fontWeight: 700, color: "#7aab6e",
+                  fontWeight: 700, color: "#009f6c",
                 }}>
                   {product.tag}
                 </span>

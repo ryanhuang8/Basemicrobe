@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "./CartContext";
+import logoImg from "./assets/basemicrobe-logo.png";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -62,8 +63,9 @@ export default function App() {
         transition: "all 0.3s ease",
       }}>
         <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
-          <a href="#" style={{ fontWeight: 700, fontSize: 18, letterSpacing: "0.08em", textDecoration: "none", color: "#111" }}>
-            BASEMICROBE
+          <a href="#" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#111" }}>
+            <img src={logoImg} alt="Basemicrobe" style={{ height: 20 }} />
+            <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: "0.08em" }}>BASEMICROBE</span>
           </a>
           {NAV_LINKS.map(l => (
             <a key={l.label} href={l.href} style={{
@@ -81,12 +83,12 @@ export default function App() {
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <Link to="/products" style={{
             fontSize: 12, letterSpacing: "0.1em", textDecoration: "none",
-            color: "#fff", background: "#7aab6e", padding: "9px 20px",
+            color: "#fff", background: "#009f6c", padding: "9px 20px",
             textTransform: "uppercase", fontWeight: 600,
             transition: "background 0.2s",
           }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#8fbc84"}
-            onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#7aab6e"}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#00b87d"}
+            onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#009f6c"}
           >
             Shop Now
           </Link>
@@ -102,7 +104,7 @@ export default function App() {
             {totalItems > 0 && (
               <span style={{
                 position: "absolute", top: 0, right: 0,
-                background: "#7aab6e", color: "#fff",
+                background: "#009f6c", color: "#fff",
                 fontSize: 9, fontWeight: 700, borderRadius: "50%",
                 width: 14, height: 14, display: "flex", alignItems: "center", justifyContent: "center",
               }}>
@@ -157,12 +159,12 @@ export default function App() {
           <div style={{ display: "flex", gap: 16 }}>
             <Link to="/products" style={{
               fontSize: 12, letterSpacing: "0.12em", textDecoration: "none",
-              color: "#fff", background: "#7aab6e", padding: "14px 32px",
+              color: "#fff", background: "#009f6c", padding: "14px 32px",
               textTransform: "uppercase", fontWeight: 700, display: "inline-block",
               transition: "background 0.2s",
             }}
-              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#8fbc84"}
-              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#7aab6e"}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#00b87d"}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#009f6c"}
             >
               Shop Now
             </Link>
@@ -195,7 +197,7 @@ export default function App() {
             {/* Bio-based */}
             <div style={{ background: "#f0ebe3", padding: "48px 44px" }}>
               <div style={{ fontSize: 36, marginBottom: 20 }}>🌱</div>
-              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: "#7aab6e", margin: "0 0 16px" }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: "#009f6c", margin: "0 0 16px" }}>
                 Bio-Based Products
               </p>
               <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: "-0.02em", margin: "0 0 20px", lineHeight: 1.2 }}>
@@ -209,7 +211,7 @@ export default function App() {
             {/* Microplastic-free */}
             <div style={{ background: "#e8e4de", padding: "48px 44px" }}>
               <div style={{ fontSize: 36, marginBottom: 20 }}>🔬</div>
-              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: "#7aab6e", margin: "0 0 16px" }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: "#009f6c", margin: "0 0 16px" }}>
                 Microplastic-Free Products
               </p>
               <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: "-0.02em", margin: "0 0 20px", lineHeight: 1.2 }}>
