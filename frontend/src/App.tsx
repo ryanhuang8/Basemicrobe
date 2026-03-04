@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "./CartContext";
+import { useIsMobile } from "./useIsMobile";
 import logoImg from "./assets/basemicrobe-logo.png";
 
 const NAV_LINKS = [
@@ -13,6 +14,7 @@ const NAV_LINKS = [
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const { totalItems } = useCart();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -56,18 +58,19 @@ export default function App() {
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: scrolled ? "14px 48px" : "22px 48px",
+        padding: isMobile ? "14px 20px" : (scrolled ? "14px 48px" : "22px 48px"),
         background: scrolled ? "rgba(250,250,248,0.95)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         borderBottom: scrolled ? "1px solid rgba(0,0,0,0.08)" : "none",
         transition: "all 0.3s ease",
+        boxSizing: "border-box",
       }}>
-        <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: isMobile ? 20 : 36, alignItems: "center" }}>
           <a href="#" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#111" }}>
             <img src={logoImg} alt="Basemicrobe" style={{ height: 20 }} />
             <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: "0.08em" }}>BASEMICROBE</span>
           </a>
-          {NAV_LINKS.map(l => (
+          {!isMobile && NAV_LINKS.map(l => (
             <a key={l.label} href={l.href} style={{
               fontSize: 13, letterSpacing: "0.06em", textDecoration: "none",
               color: "#333", fontWeight: 500, textTransform: "uppercase",
@@ -83,7 +86,8 @@ export default function App() {
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <Link to="/products" style={{
             fontSize: 12, letterSpacing: "0.1em", textDecoration: "none",
-            color: "#fff", background: "#009f6c", padding: "9px 20px",
+            color: "#fff", background: "#009f6c",
+            padding: isMobile ? "8px 14px" : "9px 20px",
             textTransform: "uppercase", fontWeight: 600,
             transition: "background 0.2s",
           }}
@@ -118,20 +122,20 @@ export default function App() {
       {/* HERO */}
       <section style={{
         height: "100vh", boxSizing: "border-box", display: "flex", flexDirection: "column",
-        justifyContent: "center", padding: "0 48px",
+        justifyContent: "center", padding: isMobile ? "0 24px" : "0 48px",
         background: "linear-gradient(160deg, #e8e4de 0%, #d4cfc8 50%, #bfb9b0 100%)",
         position: "relative", overflow: "hidden",
       }}>
         {/* Background texture circles */}
         <div style={{
           position: "absolute", top: "10%", right: "5%",
-          width: 480, height: 480, borderRadius: "50%",
+          width: isMobile ? 240 : 480, height: isMobile ? 240 : 480, borderRadius: "50%",
           background: "radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 70%)",
           pointerEvents: "none",
         }} />
         <div style={{
           position: "absolute", bottom: "15%", left: "20%",
-          width: 320, height: 320, borderRadius: "50%",
+          width: isMobile ? 160 : 320, height: isMobile ? 160 : 320, borderRadius: "50%",
           background: "radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)",
           pointerEvents: "none",
         }} />
@@ -144,19 +148,19 @@ export default function App() {
             Health · Vitamins · Innovation
           </p>
           <h1 style={{
-            fontSize: "clamp(56px, 9vw, 90px)", fontWeight: 800,
+            fontSize: "clamp(40px, 9vw, 90px)", fontWeight: 800,
             lineHeight: 0.92, letterSpacing: "-0.03em", margin: "0 0 32px",
             color: "#111",
           }}>
             Better for Your Body.<br />Better for the Planet.
           </h1>
           <p style={{
-            fontSize: "clamp(18px, 2.2vw, 26px)", fontWeight: 400,
+            fontSize: "clamp(16px, 2.2vw, 26px)", fontWeight: 400,
             color: "#444", maxWidth: 560, lineHeight: 1.5, marginBottom: 48,
           }}>
             The world's first bio-based health products and microplastic-free materials powered by natural microbes.
           </p>
-          <div style={{ display: "flex", gap: 16 }}>
+          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             <Link to="/products" style={{
               fontSize: 12, letterSpacing: "0.12em", textDecoration: "none",
               color: "#fff", background: "#009f6c", padding: "14px 32px",
@@ -184,18 +188,18 @@ export default function App() {
       </section>
 
       {/* INTRO SECTION */}
-      <section id="about" style={{ padding: "120px 48px", background: "#fafaf8" }}>
+      <section id="about" style={{ padding: isMobile ? "80px 24px" : "120px 48px", background: "#fafaf8" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", marginBottom: 20, fontWeight: 600 }}>
             What Is It
           </p>
-          <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 64px", maxWidth: 640 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 52px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 48px", maxWidth: 640 }}>
             Two product lines.<br />One mission.
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 24 }}>
 
             {/* Bio-based */}
-            <div style={{ background: "#f0ebe3", padding: "48px 44px" }}>
+            <div style={{ background: "#f0ebe3", padding: isMobile ? "32px 28px" : "48px 44px" }}>
               <div style={{ fontSize: 36, marginBottom: 20 }}>🌱</div>
               <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: "#009f6c", margin: "0 0 16px" }}>
                 Bio-Based Products
@@ -209,7 +213,7 @@ export default function App() {
             </div>
 
             {/* Microplastic-free */}
-            <div style={{ background: "#e8e4de", padding: "48px 44px" }}>
+            <div style={{ background: "#e8e4de", padding: isMobile ? "32px 28px" : "48px 44px" }}>
               <div style={{ fontSize: 36, marginBottom: 20 }}>🔬</div>
               <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: "#009f6c", margin: "0 0 16px" }}>
                 Microplastic-Free Products
@@ -227,21 +231,21 @@ export default function App() {
       </section>
 
       {/* SCIENCE SECTION */}
-      <section id="science" style={{ padding: "120px 48px", background: "#111", color: "#fff" }}>
+      <section id="science" style={{ padding: isMobile ? "80px 24px" : "120px 48px", background: "#111", color: "#fff" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#666", marginBottom: 20, fontWeight: 600 }}>
             Science
           </p>
-          <h2 style={{ fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 64px", maxWidth: 600 }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 52px)", fontWeight: 700, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 48px", maxWidth: 600 }}>
             Backed by doctors, scientists, and industry experts.
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: 2 }}>
             {[
               { num: "100%", label: "Natural Inputs", desc: "Every ingredient derived from natural sources — no synthetics." },
               { num: "0%", label: "Plastic Content", desc: "Zero plastics across the entire material formulation." },
               { num: "72%", label: "Lower Carbon Footprint", desc: "Dramatically reduced emissions compared to conventional leather." },
             ].map(item => (
-              <div key={item.num} style={{ background: "#1a1a1a", padding: "48px 40px" }}>
+              <div key={item.num} style={{ background: "#1a1a1a", padding: isMobile ? "36px 28px" : "48px 40px" }}>
                 <p style={{ fontSize: "clamp(44px, 5vw, 72px)", fontWeight: 800, letterSpacing: "-0.04em", color: "#fff", margin: "0 0 8px" }}>
                   {item.num}
                 </p>
@@ -256,15 +260,15 @@ export default function App() {
       </section>
 
       {/* CONTACT / CTA */}
-      <section id="contact" style={{ padding: "140px 48px", background: "#fafaf8", textAlign: "center" }}>
+      <section id="contact" style={{ padding: isMobile ? "80px 24px" : "140px 48px", background: "#fafaf8", textAlign: "center" }}>
         <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", marginBottom: 20, fontWeight: 600 }}>
           Get In Touch
         </p>
-        <h2 style={{ fontSize: "clamp(40px, 6vw, 84px)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 auto 32px", maxWidth: 800, lineHeight: 1 }}>
+        <h2 style={{ fontSize: "clamp(32px, 6vw, 84px)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 auto 32px", maxWidth: 800, lineHeight: 1 }}>
           Want to learn more?
         </h2>
-        <p style={{ fontSize: 18, color: "#666", maxWidth: 480, margin: "0 auto 48px", lineHeight: 1.65 }}>
-          Contact our team to explore partnership opportunities, request samples, or ask any questions about our products and science. We’d love to hear from you!
+        <p style={{ fontSize: isMobile ? 16 : 18, color: "#666", maxWidth: 480, margin: "0 auto 48px", lineHeight: 1.65 }}>
+          Contact our team to explore partnership opportunities, request samples, or ask any questions about our products and science. We'd love to hear from you!
         </p>
         <a href="mailto:hello@yourbrand.com" style={{
           fontSize: 13, letterSpacing: "0.12em", textDecoration: "none",
@@ -280,8 +284,14 @@ export default function App() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ background: "#111", color: "#fff", padding: "64px 48px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 48, marginBottom: 64 }}>
+      <footer style={{ background: "#111", color: "#fff", padding: isMobile ? "48px 24px" : "64px 48px" }}>
+        <div style={{
+          maxWidth: 1100, margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr 1fr",
+          gap: isMobile ? 40 : 48,
+          marginBottom: 48,
+        }}>
           <div>
             <p style={{ fontWeight: 800, fontSize: 18, letterSpacing: "0.08em", margin: "0 0 16px" }}>BASEMICROBE</p>
             <p style={{ fontSize: 14, color: "#555", lineHeight: 1.7, maxWidth: 260 }}>
@@ -305,7 +315,14 @@ export default function App() {
             </div>
           ))}
         </div>
-        <div style={{ borderTop: "1px solid #222", paddingTop: 32, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{
+          borderTop: "1px solid #222", paddingTop: 32,
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          justifyContent: "space-between",
+          alignItems: isMobile ? "flex-start" : "center",
+          gap: isMobile ? 16 : 0,
+        }}>
           <p style={{ fontSize: 13, color: "#444", margin: 0 }}>©2025 Basemicrobe. All Rights Reserved.</p>
           <div style={{ display: "flex", gap: 24 }}>
             {["Terms", "Privacy", "Cookies"].map(l => (

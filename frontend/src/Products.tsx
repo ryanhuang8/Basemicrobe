@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "./CartContext";
+import { useIsMobile } from "./useIsMobile";
 import logoImg from "./assets/basemicrobe-logo.png";
 import psylliumImg from "./assets/psyllium_colon_cleanse.png";
 import fizzC from "./assets/fruit_fizz_c.png";
@@ -35,6 +36,7 @@ const PRODUCTS = [
 
 export default function Products() {
   const { addToCart, totalItems } = useCart();
+  const isMobile = useIsMobile();
 
   return (
     <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", color: "#111", background: "#fafaf8", minHeight: "100vh" }}>
@@ -43,17 +45,18 @@ export default function Products() {
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "18px 48px",
+        padding: isMobile ? "14px 20px" : "18px 48px",
         background: "rgba(250,250,248,0.95)",
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid rgba(0,0,0,0.08)",
+        boxSizing: "border-box",
       }}>
-        <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: isMobile ? 0 : 36, alignItems: "center" }}>
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#111" }}>
             <img src={logoImg} alt="Basemicrobe" style={{ height: 20 }} />
             <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: "0.08em" }}>BASEMICROBE</span>
           </Link>
-          {[
+          {!isMobile && [
             { label: "About", href: "/#about" },
             { label: "Contact", href: "/#contact" },
           ].map(l => (
@@ -72,7 +75,8 @@ export default function Products() {
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <Link to="/products" style={{
             fontSize: 12, letterSpacing: "0.1em", textDecoration: "none",
-            color: "#fff", background: "#009f6c", padding: "9px 20px",
+            color: "#fff", background: "#009f6c",
+            padding: isMobile ? "8px 14px" : "9px 20px",
             textTransform: "uppercase", fontWeight: 600,
             transition: "background 0.2s",
           }}
@@ -105,7 +109,7 @@ export default function Products() {
       </nav>
 
       {/* PAGE HEADER */}
-      <div style={{ padding: "140px 48px 64px", maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ padding: isMobile ? "120px 24px 48px" : "140px 48px 64px", maxWidth: 1200, margin: "0 auto" }}>
         <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", marginBottom: 16, fontWeight: 600 }}>
           All Products
         </p>
@@ -115,8 +119,12 @@ export default function Products() {
       </div>
 
       {/* PRODUCT GRID */}
-      <div style={{ padding: "0 48px 120px", maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+      <div style={{ padding: isMobile ? "0 24px 80px" : "0 48px 120px", maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+          gap: 24,
+        }}>
           {PRODUCTS.map(product => (
             <div key={product.name} style={{
               background: "#fff", border: "1px solid #ebebeb",
