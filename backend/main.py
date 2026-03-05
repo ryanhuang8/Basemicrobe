@@ -12,6 +12,7 @@ stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 allowed_origins = [origin.strip() for origin in FRONTEND_URL.split(",")]
+PRIMARY_URL = allowed_origins[0]
 
 app = FastAPI()
 
@@ -59,8 +60,8 @@ async def create_checkout_session(request: CheckoutRequest):
         payment_method_types=["card"],
         line_items=line_items,
         mode="payment",
-        success_url=f"{FRONTEND_URL}/success?session_id={{CHECKOUT_SESSION_ID}}",
-        cancel_url=f"{FRONTEND_URL}/cart",
+        success_url=f"{PRIMARY_URL}/success?session_id={{CHECKOUT_SESSION_ID}}",
+        cancel_url=f"{PRIMARY_URL}/cart",
     )
 
     return {"url": session.url}
