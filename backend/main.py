@@ -34,6 +34,11 @@ class CheckoutRequest(BaseModel):
     items: list[CartItem]
 
 
+@app.get("/")
+async def health():
+    return {"status": "ok"}
+
+
 @app.post("/api/checkout")
 async def create_checkout_session(request: CheckoutRequest):
     line_items = []
