@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaInstagram, FaFacebook } from "react-icons/fa";
 import { useCart } from "./CartContext";
 import { useIsMobile } from "./useIsMobile";
 import logoImg from "./assets/basemicrobe-logo.png";
@@ -324,13 +324,19 @@ export default function App() {
           gap: isMobile ? 16 : 0,
         }}>
           <p style={{ fontSize: 13, color: "#444", margin: 0 }}>©2025 Basemicrobe. All Rights Reserved.</p>
-          <div style={{ display: "flex", gap: 24 }}>
-            {["Terms", "Privacy", "Cookies"].map(l => (
-              <a key={l} href="#" style={{ fontSize: 13, color: "#444", textDecoration: "none" }}
-                onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#888"}
-                onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "#444"}
-              >{l}</a>
-            ))}
+          <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
+            <a href="https://www.instagram.com/basemicrobe/" target="_blank" rel="noopener noreferrer" style={{ color: "#444", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#fff"}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "#444"}
+            >
+              <FaInstagram size={18} />
+            </a>
+            <a href="#" style={{ color: "#444", transition: "color 0.2s" }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#fff"}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "#444"}
+            >
+              <FaFacebook size={18} />
+            </a>
           </div>
         </div>
       </footer>
