@@ -2,41 +2,28 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "./CartContext";
 import { useIsMobile } from "./useIsMobile";
+import { useLanguage } from "./LanguageContext";
+import LangSwitcher from "./LangSwitcher";
 import logoImg from "./assets/basemicrobe-logo.png";
 import psylliumImg from "./assets/psyllium_colon_cleanse.png";
 import fizzC from "./assets/fruit_fizz_c.png";
 import veganLeather from "./assets/leather.png";
 
-const PRODUCTS = [
-  {
-    name: "Psyllium Colon Cleanse",
-    desc: "Natural fiber formula for digestive health and gentle daily cleansing.",
-    price: "$22.50",
-    tag: "Health",
-    bg: "#e8e4de",
-    image: psylliumImg,
-  },
-  {
-    name: "Fruit Fizz-C",
-    desc: "Effervescent vitamin C blend with real fruit extracts for daily immunity support.",
-    price: "$13 / pack",
-    tag: "Wellness",
-    bg: "#dde8d8",
-    image: fizzC,
-  },
-  {
-    name: "Vegan Leather",
-    desc: "Plant-based, plastic-free leather alternative crafted from natural microbes.",
-    price: "Ask for price",
-    tag: "Materials",
-    bg: "#e4ddd6",
-    image: veganLeather,
-  },
-];
+const PRODUCT_IMAGES = [psylliumImg, fizzC, veganLeather];
+const PRODUCT_BG = ["#e8e4de", "#dde8d8", "#e4ddd6"];
+const PRODUCT_PRICES = ["$22.50", "$13 / pack", "Ask for price"];
 
 export default function Products() {
   const { addToCart, totalItems } = useCart();
   const isMobile = useIsMobile();
+  const { t } = useLanguage();
+
+  const products = t.productsPage.products.map((p, i) => ({
+    ...p,
+    image: PRODUCT_IMAGES[i],
+    bg: PRODUCT_BG[i],
+    price: PRODUCT_PRICES[i],
+  }));
 
   return (
     <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", color: "#111", background: "#fafaf8", minHeight: "100vh" }}>
@@ -57,8 +44,8 @@ export default function Products() {
             <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: "0.08em" }}>BASEMICROBE</span>
           </Link>
           {!isMobile && [
-            { label: "About", href: "/#about" },
-            { label: "Contact", href: "/#contact" },
+            { label: t.nav.about, href: "/#about" },
+            { label: t.nav.contact, href: "/#contact" },
           ].map(l => (
             <a key={l.label} href={l.href} style={{
               fontSize: 13, letterSpacing: "0.06em", textDecoration: "none",
@@ -73,6 +60,7 @@ export default function Products() {
           ))}
         </div>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <LangSwitcher />
           <Link to="/products" style={{
             fontSize: 12, letterSpacing: "0.1em", textDecoration: "none",
             color: "#fff", background: "#009f6c",
@@ -83,7 +71,7 @@ export default function Products() {
             onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#00b87d"}
             onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#009f6c"}
           >
-            Shop Now
+            {t.nav.shopNow}
           </Link>
           <Link to="/cart" style={{
             display: "flex", alignItems: "center", justifyContent: "center",
@@ -111,21 +99,17 @@ export default function Products() {
       {/* PAGE HEADER */}
       <div style={{ padding: isMobile ? "120px 24px 48px" : "140px 48px 64px", maxWidth: 1200, margin: "0 auto" }}>
         <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", marginBottom: 16, fontWeight: 600 }}>
-          All Products
+          {t.productsPage.allProducts}
         </p>
         <h1 style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 800, letterSpacing: "-0.03em", margin: 0, lineHeight: 1 }}>
-          Shop
+          {t.productsPage.shop}
         </h1>
       </div>
 
       {/* PRODUCT GRID */}
       <div style={{ padding: isMobile ? "0 24px 80px" : "0 48px 120px", maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-          gap: 24,
-        }}>
-          {PRODUCTS.map(product => (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 24 }}>
+          {products.map(product => (
             <div key={product.name} style={{
               background: "#fff", border: "1px solid #ebebeb",
               display: "flex", flexDirection: "column",
@@ -134,37 +118,20 @@ export default function Products() {
               onMouseEnter={e => (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(0,0,0,0.08)"}
               onMouseLeave={e => (e.currentTarget as HTMLElement).style.boxShadow = "none"}
             >
-              {/* Image */}
-              <div style={{
-                background: product.bg,
-                aspectRatio: "4 / 3",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                overflow: "hidden",
-              }}>
+              <div style={{ background: product.bg, aspectRatio: "4 / 3", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
                 {product.image
                   ? <img src={product.image} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   : <p style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#999", fontWeight: 600 }}>Image</p>
                 }
               </div>
-
-              {/* Card body */}
               <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: 8, flex: 1 }}>
-                <span style={{
-                  fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase",
-                  fontWeight: 700, color: "#009f6c",
-                }}>
+                <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 700, color: "#009f6c" }}>
                   {product.tag}
                 </span>
-                <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0, letterSpacing: "-0.01em" }}>
-                  {product.name}
-                </h2>
-                <p style={{ fontSize: 14, color: "#666", lineHeight: 1.65, margin: 0, flex: 1 }}>
-                  {product.desc}
-                </p>
+                <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0, letterSpacing: "-0.01em" }}>{product.name}</h2>
+                <p style={{ fontSize: 14, color: "#666", lineHeight: 1.65, margin: 0, flex: 1 }}>{product.desc}</p>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 16 }}>
-                  <span style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em" }}>
-                    {product.price}
-                  </span>
+                  <span style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em" }}>{product.price}</span>
                   <button
                     onClick={() => addToCart({ name: product.name, price: product.price, bg: product.bg, image: product.image })}
                     style={{
@@ -176,7 +143,7 @@ export default function Products() {
                     onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#333"}
                     onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#111"}
                   >
-                    Add to Cart
+                    {t.productsPage.addToCart}
                   </button>
                 </div>
               </div>

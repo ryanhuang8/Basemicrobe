@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "./CartContext";
 import { useIsMobile } from "./useIsMobile";
+import { useLanguage } from "./LanguageContext";
+import LangSwitcher from "./LangSwitcher";
 import logoImg from "./assets/basemicrobe-logo.png";
 
 export default function Success() {
   const { totalItems } = useCart();
   const isMobile = useIsMobile();
+  const { t } = useLanguage();
 
   return (
     <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", color: "#111", background: "#fafaf8", minHeight: "100vh" }}>
@@ -28,18 +31,18 @@ export default function Success() {
           </Link>
         </div>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <LangSwitcher />
           <Link to="/products" style={{
             fontSize: 12, letterSpacing: "0.1em", textDecoration: "none",
             color: "#fff", background: "#009f6c",
             padding: isMobile ? "8px 14px" : "9px 20px",
             textTransform: "uppercase", fontWeight: 600,
           }}>
-            Shop Now
+            {t.nav.shopNow}
           </Link>
           <Link to="/cart" style={{
             display: "flex", alignItems: "center", justifyContent: "center",
-            textDecoration: "none", color: "#111", padding: "6px",
-            position: "relative",
+            textDecoration: "none", color: "#111", padding: "6px", position: "relative",
           }}>
             <FaShoppingCart size={20} />
             {totalItems > 0 && (
@@ -59,20 +62,20 @@ export default function Success() {
       <div style={{ maxWidth: 600, margin: "0 auto", padding: isMobile ? "140px 24px 80px" : "180px 48px 120px", textAlign: "center" }}>
         <div style={{ fontSize: 48, marginBottom: 24 }}>✓</div>
         <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#009f6c", marginBottom: 16, fontWeight: 600 }}>
-          Order Confirmed
+          {t.success.orderConfirmed}
         </p>
         <h1 style={{ fontSize: "clamp(28px, 5vw, 56px)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 24px", lineHeight: 1 }}>
-          Thank you!
+          {t.success.thankYou}
         </h1>
         <p style={{ fontSize: 16, color: "#666", lineHeight: 1.6, marginBottom: 48 }}>
-          Your payment was successful. You'll receive a confirmation email shortly.
+          {t.success.paymentSuccess}
         </p>
         <Link to="/products" style={{
           fontSize: 12, letterSpacing: "0.12em", textDecoration: "none",
           color: "#fff", background: "#009f6c", padding: "14px 32px",
           textTransform: "uppercase", fontWeight: 700, display: "inline-block",
         }}>
-          Continue Shopping
+          {t.success.continueShopping}
         </Link>
       </div>
     </div>

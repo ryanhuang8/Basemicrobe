@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { useCart } from "./CartContext";
 import { useIsMobile } from "./useIsMobile";
+import { useLanguage } from "./LanguageContext";
+import LangSwitcher from "./LangSwitcher";
 import logoImg from "./assets/basemicrobe-logo.png";
 
 export default function Cart() {
@@ -10,6 +12,7 @@ export default function Cart() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const isMobile = useIsMobile();
+  const { t } = useLanguage();
 
   const handleCheckout = async () => {
     setLoading(true);
@@ -58,8 +61,8 @@ export default function Cart() {
             <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: "0.08em" }}>BASEMICROBE</span>
           </Link>
           {!isMobile && [
-            { label: "About", href: "/#about" },
-            { label: "Contact", href: "/#contact" },
+            { label: t.nav.about, href: "/#about" },
+            { label: t.nav.contact, href: "/#contact" },
           ].map(l => (
             <a key={l.label} href={l.href} style={{
               fontSize: 13, letterSpacing: "0.06em", textDecoration: "none",
@@ -74,6 +77,7 @@ export default function Cart() {
           ))}
         </div>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <LangSwitcher />
           <Link to="/products" style={{
             fontSize: 12, letterSpacing: "0.1em", textDecoration: "none",
             color: "#fff", background: "#009f6c",
@@ -84,7 +88,7 @@ export default function Cart() {
             onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#00b87d"}
             onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#009f6c"}
           >
-            Shop Now
+            {t.nav.shopNow}
           </Link>
           <Link to="/cart" style={{
             display: "flex", alignItems: "center", justifyContent: "center",
@@ -112,26 +116,25 @@ export default function Cart() {
       {/* PAGE CONTENT */}
       <div style={{ maxWidth: 800, margin: "0 auto", padding: isMobile ? "120px 20px 80px" : "140px 48px 120px" }}>
         <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", marginBottom: 16, fontWeight: 600 }}>
-          Your Cart
+          {t.cart.yourCart}
         </p>
         <h1 style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 0 48px", lineHeight: 1 }}>
-          {totalItems === 0 ? "Cart is empty" : `${totalItems} item${totalItems !== 1 ? "s" : ""}`}
+          {totalItems === 0 ? t.cart.cartEmpty : t.cart.itemsSuffix(totalItems)}
         </h1>
 
         {items.length === 0 ? (
           <div>
-            <p style={{ fontSize: 16, color: "#666", marginBottom: 32 }}>You haven't added anything yet.</p>
+            <p style={{ fontSize: 16, color: "#666", marginBottom: 32 }}>{t.cart.notAdded}</p>
             <Link to="/products" style={{
               fontSize: 12, letterSpacing: "0.12em", textDecoration: "none",
               color: "#fff", background: "#009f6c", padding: "14px 32px",
               textTransform: "uppercase", fontWeight: 700, display: "inline-block",
             }}>
-              Browse Products
+              {t.cart.browseProducts}
             </Link>
           </div>
         ) : (
           <div>
-            {/* Items */}
             <div style={{ borderTop: "1px solid #e5e5e5", marginBottom: 40 }}>
               {items.map(item => (
                 <div key={item.name} style={{
@@ -139,73 +142,51 @@ export default function Cart() {
                   padding: "20px 0", borderBottom: "1px solid #e5e5e5",
                   flexWrap: isMobile ? "wrap" : "nowrap",
                 }}>
-                  {/* Image */}
-                  <div style={{
-                    width: isMobile ? 64 : 80, height: isMobile ? 64 : 80, flexShrink: 0,
-                    background: item.bg, overflow: "hidden",
-                  }}>
-                    {item.image
-                      ? <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                      : null
-                    }
+                  <div style={{ width: isMobile ? 64 : 80, height: isMobile ? 64 : 80, flexShrink: 0, background: item.bg, overflow: "hidden" }}>
+                    {item.image ? <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : null}
                   </div>
-
-                  {/* Details */}
                   <div style={{ flex: 1, minWidth: isMobile ? "calc(100% - 76px)" : "auto" }}>
                     <p style={{ fontWeight: 700, fontSize: 15, margin: "0 0 4px" }}>{item.name}</p>
                     <p style={{ fontSize: 14, color: "#666", margin: 0 }}>{item.price}</p>
                   </div>
-
-                  {/* Quantity + Remove row on mobile */}
                   <div style={{ display: "flex", alignItems: "center", gap: 16, width: isMobile ? "100%" : "auto" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 0, border: "1px solid #ddd" }}>
-                      <button onClick={() => updateQuantity(item.name, item.quantity - 1)} style={{
-                        width: 32, height: 32, border: "none", background: "transparent",
-                        cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center",
-                      }}>−</button>
+                    <div style={{ display: "flex", alignItems: "center", border: "1px solid #ddd" }}>
+                      <button onClick={() => updateQuantity(item.name, item.quantity - 1)} style={{ width: 32, height: 32, border: "none", background: "transparent", cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>−</button>
                       <span style={{ width: 32, textAlign: "center", fontSize: 14, fontWeight: 600 }}>{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.name, item.quantity + 1)} style={{
-                        width: 32, height: 32, border: "none", background: "transparent",
-                        cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center",
-                      }}>+</button>
+                      <button onClick={() => updateQuantity(item.name, item.quantity + 1)} style={{ width: 32, height: 32, border: "none", background: "transparent", cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>+</button>
                     </div>
-
                     <button onClick={() => removeFromCart(item.name)} style={{
                       background: "none", border: "none", cursor: "pointer",
                       fontSize: 12, color: "#999", letterSpacing: "0.06em",
-                      textTransform: "uppercase", fontWeight: 600,
-                      transition: "color 0.2s", padding: 0,
+                      textTransform: "uppercase", fontWeight: 600, transition: "color 0.2s", padding: 0,
                     }}
                       onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = "#111"}
                       onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = "#999"}
                     >
-                      Remove
+                      {t.cart.remove}
                     </button>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Summary */}
             <div style={{ display: "flex", justifyContent: "flex-end" }}>
               <div style={{ width: isMobile ? "100%" : 320 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                  <span style={{ fontSize: 14, color: "#666" }}>Subtotal</span>
+                  <span style={{ fontSize: 14, color: "#666" }}>{t.cart.subtotal}</span>
                   <span style={{ fontSize: 14, fontWeight: 600 }}>
                     ${numericTotal.toFixed(2)}
-                    {items.some(i => i.price === "Ask for price") && " + custom pricing"}
+                    {items.some(i => i.price === "Ask for price") && t.cart.customPricing}
                   </span>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 32, paddingTop: 16, borderTop: "1px solid #e5e5e5" }}>
-                  <span style={{ fontSize: 16, fontWeight: 700 }}>Total</span>
+                  <span style={{ fontSize: 16, fontWeight: 700 }}>{t.cart.total}</span>
                   <span style={{ fontSize: 16, fontWeight: 700 }}>
                     ${numericTotal.toFixed(2)}
-                    {items.some(i => i.price === "Ask for price") && "+"}
+                    {items.some(i => i.price === "Ask for price") && t.cart.customPlus}
                   </span>
                 </div>
-                {error && (
-                  <p style={{ fontSize: 13, color: "#c0392b", marginBottom: 12, textAlign: "center" }}>{error}</p>
-                )}
+                {error && <p style={{ fontSize: 13, color: "#c0392b", marginBottom: 12, textAlign: "center" }}>{error}</p>}
                 <button
                   onClick={handleCheckout}
                   disabled={loading}
@@ -218,7 +199,7 @@ export default function Cart() {
                   onMouseEnter={e => { if (!loading) (e.currentTarget as HTMLElement).style.background = "#333"; }}
                   onMouseLeave={e => { if (!loading) (e.currentTarget as HTMLElement).style.background = "#111"; }}
                 >
-                  {loading ? "Redirecting..." : "Checkout"}
+                  {loading ? t.cart.redirecting : t.cart.checkout}
                 </button>
               </div>
             </div>

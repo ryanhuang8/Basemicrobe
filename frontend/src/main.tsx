@@ -7,10 +7,12 @@ import Products from './Products.tsx'
 import Cart from './Cart.tsx'
 import Success from './Success.tsx'
 import { CartProvider } from './CartContext.tsx'
+import { LanguageProvider } from './LanguageContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+      <LanguageProvider>
       <CartProvider>
         <Routes>
           <Route path="/" element={<App />} />
@@ -19,6 +21,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/success" element={<Success />} />
         </Routes>
       </CartProvider>
+      </LanguageProvider>
     </BrowserRouter>
   </StrictMode>,
 )
