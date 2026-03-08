@@ -63,6 +63,7 @@ const translations = {
         { name: "Psyllium Colon Cleanse", desc: "Natural fiber formula for digestive health and gentle daily cleansing.", tag: "Health" },
         { name: "Fruit Fizz-C", desc: "Effervescent vitamin C blend with real fruit extracts for daily immunity support.", tag: "Wellness" },
         { name: "Vegan Leather", desc: "Plant-based, plastic-free leather alternative crafted from natural microbes.", tag: "Materials" },
+        { name: "Test Product", desc: "For Stripe testing only — $1 charge.", tag: "Test" },
       ],
     },
     cart: {
@@ -148,6 +149,7 @@ const translations = {
         { name: "车前草结肠清洁", desc: "天然纤维配方，促进消化健康和温和的日常清洁。", tag: "健康" },
         { name: "果味泡腾维C", desc: "含真实水果提取物的泡腾维C混合物，支持日常免疫。", tag: "健康养生" },
         { name: "纯素皮革", desc: "由天然微生物精心制作的植物基、无塑料皮革替代品。", tag: "材料" },
+        { name: "测试产品", desc: "仅供Stripe测试使用 — $1收费。", tag: "测试" },
       ],
     },
     cart: {

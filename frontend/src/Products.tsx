@@ -9,9 +9,9 @@ import psylliumImg from "./assets/psyllium_colon_cleanse.png";
 import fizzC from "./assets/fruit_fizz_c.png";
 import veganLeather from "./assets/leather.png";
 
-const PRODUCT_IMAGES = [psylliumImg, fizzC, veganLeather];
-const PRODUCT_BG = ["#e8e4de", "#dde8d8", "#e4ddd6"];
-const PRODUCT_PRICES = ["$22.50", "$13 / pack", "Ask for price"];
+const PRODUCT_IMAGES = [psylliumImg, fizzC, veganLeather, ""];
+const PRODUCT_BG = ["#e8e4de", "#dde8d8", "#e4ddd6", "#e8ede8"];
+const PRODUCT_PRICES = ["$22.50", "$13 / pack", "Ask for price", "$1.00"];
 
 export default function Products() {
   const { addToCart, totalItems } = useCart();
