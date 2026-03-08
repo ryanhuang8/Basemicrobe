@@ -62,7 +62,6 @@ async def create_checkout_session(request: CheckoutRequest):
         raise HTTPException(status_code=400, detail="No priceable items in cart")
 
     session = stripe.checkout.Session.create(
-        payment_method_types=["card"],
         line_items=line_items,
         mode="payment",
         success_url=f"{PRIMARY_URL}/success?session_id={{CHECKOUT_SESSION_ID}}",
