@@ -5,11 +5,11 @@ import { useIsMobile } from "./useIsMobile";
 import { useLanguage } from "./LanguageContext";
 import LangSwitcher from "./LangSwitcher";
 import logoImg from "./assets/basemicrobe-logo.png";
-import psylliumImg from "./assets/psyllium_colon_cleanse.png";
-import fizzC from "./assets/fruit_fizz_c.png";
-import veganLeather from "./assets/leather.png";
+import testProductOne from "./assets/test1.jpg";
+import testProductTwo from "./assets/test2.jpg";
+import testProductThree from "./assets/test3.jpg";
 
-const PRODUCT_IMAGES = [psylliumImg, fizzC, veganLeather /*, ""*/];
+const PRODUCT_IMAGES = [testProductOne, testProductTwo, testProductThree /*, ""*/];
 const PRODUCT_BG = ["#e8e4de", "#dde8d8", "#e4ddd6" /*, "#e8ede8"*/];
 const PRODUCT_PRICES = ["$22.50", "$13 / pack", "Ask for price" /*, "$1.00"*/];
 
