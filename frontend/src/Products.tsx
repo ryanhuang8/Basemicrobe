@@ -11,7 +11,7 @@ import testProductThree from "./assets/test3.jpg";
 
 const PRODUCT_IMAGES = [testProductOne, testProductTwo, testProductThree /*, ""*/];
 const PRODUCT_BG = ["#e8e4de", "#dde8d8", "#e4ddd6" /*, "#e8ede8"*/];
-const PRODUCT_PRICES = ["$20.00", "$13 / pack", "Ask for price" /*, "$1.00"*/];
+const PRODUCT_PRICES = ["$20.00", "$15 / pack", "Ask for price" /*, "$1.00"*/];
 
 export default function Products() {
   const { addToCart, totalItems } = useCart();
