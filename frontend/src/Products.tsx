@@ -8,10 +8,11 @@ import logoImg from "./assets/basemicrobe-logo.png";
 import testProductOne from "./assets/test1.jpg";
 import testProductTwo from "./assets/test2.jpg";
 import testProductThree from "./assets/test3.jpg";
+import pagevineProduct from "./assets/pagevine.jpg";
 
-const PRODUCT_IMAGES = [testProductOne, testProductTwo, testProductThree /*, ""*/];
-const PRODUCT_BG = ["#e8e4de", "#dde8d8", "#e4ddd6" /*, "#e8ede8"*/];
-const PRODUCT_PRICES = ["$20.00", "$15 / pack", "Ask for price" /*, "$1.00"*/];
+const PRODUCT_IMAGES = [testProductOne, testProductTwo, testProductThree, pagevineProduct /*, ""*/];
+const PRODUCT_BG = ["#e8e4de", "#dde8d8", "#e4ddd6", "#e8ede8" /*, "#e8ede8"*/];
+const PRODUCT_PRICES = ["$20.00", "$15 / pack", "Ask for price", "$15.00" /*, "$1.00"*/];
 
 export default function Products() {
   const { addToCart, totalItems } = useCart();
