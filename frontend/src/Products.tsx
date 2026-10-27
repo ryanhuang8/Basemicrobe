@@ -8,6 +8,7 @@ import logoImg from "./assets/basemicrobe-logo.png";
 import testProductOne from "./assets/test1.jpg";
 import testProductTwo from "./assets/test2.jpg";
 import testProductThree from "./assets/test3.jpg";
+import { lipBalm, lipBalmCopy } from "./lipBalm";
 
 const PRODUCT_IMAGES = [testProductOne, testProductTwo, testProductThree /*, ""*/];
 const PRODUCT_BG = ["#e8e4de", "#dde8d8", "#e4ddd6" /*, "#e8ede8"*/];
@@ -16,14 +17,23 @@ const PRODUCT_PRICES = ["$20.00", "$15 / pack", "Ask for price" /*, "$1.00"*/];
 export default function Products() {
   const { addToCart, totalItems } = useCart();
   const isMobile = useIsMobile();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
-  const products = t.productsPage.products.map((p, i) => ({
+  const products = [...t.productsPage.products.map((p, i) => ({
     ...p,
     image: PRODUCT_IMAGES[i],
     bg: PRODUCT_BG[i],
     price: PRODUCT_PRICES[i],
-  }));
+    detailsPath: undefined as string | undefined,
+  })), {
+    name: lipBalmCopy[lang].name,
+    desc: lipBalmCopy[lang].shortDescription,
+    tag: lipBalmCopy[lang].tag,
+    image: lipBalm.image,
+    bg: lipBalm.bg,
+    price: lipBalm.price,
+    detailsPath: lipBalm.path,
+  }];
 
   return (
     <div style={{ fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif", color: "#111", background: "#fafaf8", minHeight: "100vh" }}>
@@ -120,7 +130,9 @@ export default function Products() {
             >
               <div style={{ background: product.bg, aspectRatio: "4 / 3", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
                 {product.image
-                  ? <img src={product.image} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  ? product.detailsPath
+                    ? <Link to={product.detailsPath} aria-label={product.name} style={{ display: "block", width: "100%", height: "100%" }}><img src={product.image} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 65%" }} /></Link>
+                    : <img src={product.image} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   : <p style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#999", fontWeight: 600 }}>Image</p>
                 }
               </div>
@@ -128,11 +140,11 @@ export default function Products() {
                 <span style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 700, color: "#009f6c" }}>
                   {product.tag}
                 </span>
-                <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0, letterSpacing: "-0.01em" }}>{product.name}</h2>
+                <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0, letterSpacing: "-0.01em" }}>{product.detailsPath ? <Link to={product.detailsPath} style={{ color: "inherit", textDecoration: "none" }}>{product.name}</Link> : product.name}</h2>
                 <p style={{ fontSize: 14, color: "#666", lineHeight: 1.65, margin: 0, flex: 1 }}>{product.desc}</p>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 16 }}>
                   <span style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em" }}>{product.price}</span>
-                  <button
+                  {product.detailsPath ? <Link to={product.detailsPath} style={{ fontSize: 11, fontWeight: 700, background: "#111", color: "#fff", padding: "10px 20px", textDecoration: "none" }}>{lang === "zh" ? "查看商品" : "View Product"}</Link> : <button
                     onClick={() => addToCart({ name: product.name, price: product.price, bg: product.bg, image: product.image })}
                     style={{
                       fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase",
@@ -144,7 +156,7 @@ export default function Products() {
                     onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#111"}
                   >
                     {t.productsPage.addToCart}
-                  </button>
+                  </button>}
                 </div>
               </div>
             </div>
