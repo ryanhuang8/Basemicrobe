@@ -237,27 +237,62 @@ export default function App() {
       </section>
 
       {/* CONTACT / CTA */}
-      <section id="contact" style={{ padding: isMobile ? "80px 24px" : "140px 48px", background: "#fafaf8", textAlign: "center" }}>
-        <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", marginBottom: 20, fontWeight: 600 }}>
-          {t.contact.label}
-        </p>
-        <h2 style={{ fontSize: "clamp(32px, 6vw, 84px)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 auto 32px", maxWidth: 800, lineHeight: 1 }}>
-          {t.contact.heading}
-        </h2>
-        <p style={{ fontSize: isMobile ? 16 : 18, color: "#666", maxWidth: 480, margin: "0 auto 48px", lineHeight: 1.65 }}>
-          {t.contact.body}
-        </p>
-        <a href="mailto:basemicrobe@gmail.com" style={{
-          fontSize: 13, letterSpacing: "0.12em", textDecoration: "none",
-          color: "#fff", background: "#111", padding: "16px 40px",
-          textTransform: "uppercase", fontWeight: 700, display: "inline-block",
-          transition: "background 0.2s",
-        }}
-          onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#333"}
-          onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#111"}
-        >
-          {t.contact.button}
-        </a>
+      <section id="contact" style={{ padding: isMobile ? "80px 24px 100px" : "140px 48px", background: "#fafaf8" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 64 }}>
+            <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", marginBottom: 20, fontWeight: 600 }}>
+              {t.contact.label}
+            </p>
+            <h2 style={{ fontSize: "clamp(32px, 6vw, 84px)", fontWeight: 800, letterSpacing: "-0.03em", margin: "0 auto 24px", maxWidth: 800, lineHeight: 1 }}>
+              {t.contact.heading}
+            </h2>
+            <p style={{ fontSize: isMobile ? 16 : 18, color: "#666", maxWidth: 480, margin: "0 auto", lineHeight: 1.65 }}>
+              {t.contact.body}
+            </p>
+          </div>
+
+          {/* CONTACT CARDS */}
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 24, marginBottom: 56 }}>
+            <div style={{ background: "#fff", border: "1px solid #ebebeb", padding: isMobile ? "32px 28px" : "44px 40px" }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: "#009f6c", margin: "0 0 16px" }}>
+                {t.contact.headquartersLabel}
+              </p>
+              <p style={{ fontSize: 15, color: "#333", lineHeight: 1.75, margin: "0 0 20px", whiteSpace: "pre-line" }}>{t.contact.headquarters}</p>
+              <a href={`mailto:${t.contact.email}`} style={{ display: "block", fontSize: 14, color: "#111", textDecoration: "none", marginBottom: 8, fontWeight: 600 }}>
+                {t.contact.email}
+              </a>
+              <a href={`tel:${t.contact.phone.replace(/[^+\d]/g, "")}`} style={{ fontSize: 14, color: "#666", textDecoration: "none" }}>
+                {t.contact.phone}
+              </a>
+            </div>
+            <div style={{ background: "#fff", border: "1px solid #ebebeb", padding: isMobile ? "32px 28px" : "44px 40px" }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, color: "#009f6c", margin: "0 0 16px" }}>
+                {t.contact.distributorLabel}
+              </p>
+              <p style={{ fontSize: 15, color: "#333", lineHeight: 1.75, margin: "0 0 20px", whiteSpace: "pre-line" }}>{t.contact.distributor}</p>
+              <a href={`mailto:${t.contact.distributorEmail}`} style={{ display: "block", fontSize: 14, color: "#111", textDecoration: "none", marginBottom: 8, fontWeight: 600 }}>
+                {t.contact.distributorEmail}
+              </a>
+              <a href={`tel:${t.contact.distributorPhone.replace(/[^+\d]/g, "")}`} style={{ fontSize: 14, color: "#666", textDecoration: "none" }}>
+                {t.contact.distributorPhone}
+              </a>
+            </div>
+          </div>
+
+          <div style={{ textAlign: "center" }}>
+            <a href={`mailto:${t.contact.email}`} style={{
+              fontSize: 13, letterSpacing: "0.12em", textDecoration: "none",
+              color: "#fff", background: "#111", padding: "16px 40px",
+              textTransform: "uppercase", fontWeight: 700, display: "inline-block",
+              transition: "background 0.2s",
+            }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "#333"}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "#111"}
+            >
+              {t.contact.button}
+            </a>
+          </div>
+        </div>
       </section>
 
       {/* FOOTER */}
@@ -271,7 +306,10 @@ export default function App() {
         }}>
           <div>
             <p style={{ fontWeight: 800, fontSize: 18, letterSpacing: "0.08em", margin: "0 0 16px" }}>BASEMICROBE</p>
-            <p style={{ fontSize: 14, color: "#555", lineHeight: 1.7, maxWidth: 260 }}>{t.footer.brandDesc}</p>
+            <p style={{ fontSize: 14, color: "#555", lineHeight: 1.7, maxWidth: 260, margin: "0 0 16px" }}>{t.footer.brandDesc}</p>
+            <p style={{ fontSize: 13, color: "#888", lineHeight: 1.7, margin: "0 0 8px", whiteSpace: "pre-line" }}>{t.footer.address}</p>
+            <a href={`mailto:${t.footer.email}`} style={{ display: "block", fontSize: 13, color: "#888", textDecoration: "none", marginBottom: 4 }}>{t.footer.email}</a>
+            <a href={`tel:${t.footer.phone.replace(/[^+\d]/g, "")}`} style={{ fontSize: 13, color: "#888", textDecoration: "none" }}>{t.footer.phone}</a>
           </div>
           {[
             {
